@@ -37,6 +37,24 @@ const getBukuSatu = async (req, res) => {
 const createNewBuku = async (req, res) => {
     const {judul, penulis, penerbit, genre} = req.body
 
+    let emptyFields = []
+
+    if(!judul) {
+        emptyFields.push('judul')
+    }
+    if(!penulis) {
+        emptyFields.push('penulis')
+    }
+    if(!penerbit) {
+        emptyFields.push('penerbit')
+    }
+    if(!genre) {
+        emptyFields.push('genre')
+    }
+    if(emptyFields.length > 0) {
+        return res.status(400).json({error: 'Mohon isi semua kolom', emptyFields})
+    }
+
     try {
         const buku = await Buku.create({judul, penulis, penerbit, genre})
         res.status(200).json(buku)
