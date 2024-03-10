@@ -105,18 +105,19 @@ const updateBuku = async (req, res) => {
 async function searchBuku(req, res) {
     const { keyword } = req.query;
   
-    // Buat query untuk mencari buku berdasarkan keyword
+    // Create a query to search for books based on the keyword
     const query = { $text: { $search: keyword } };
   
-    // Jalankan query dan dapatkan hasil
+    // Execute the query and retrieve results
     const results = await BukuModel.find(query);
   
-    // Kirim hasil ke client
+    // Send the search results back to the client
     res.status(200).json({
       success: true,
       data: results,
     });
   }
+  
   
 
 
