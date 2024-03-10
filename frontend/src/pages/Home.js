@@ -4,6 +4,7 @@ import { useBukuContext } from '../hooks/useBukuContext'
 // Components
 import BukuDetails from '../components/BukuDetails'
 import BukuForm from '../components/BukuForm'
+import BukuSearch from '../components/BukuSearch'
 
 const Home = () => {
     const {buku, dispatch} = useBukuContext()

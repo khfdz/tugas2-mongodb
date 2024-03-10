@@ -78,7 +78,7 @@ const BukuForm = () => {
                 className={emptyFields.includes('genre') ? 'error' : ''}
             />
 
-            <button type="submit">Simpan</button>
+            <button type="submit" className="simpan">Simpan</button>
             {error && <div className="error">{error}</div>}
         </form>
     )

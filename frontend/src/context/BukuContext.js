@@ -16,6 +16,18 @@ export const bukuReducer = (state, action) => {
             return {
                 buku: state.buku.filter((b) => b._id !== action.payload._id)
             }
+        case 'UPDATE_BUKU':
+            // return {
+            //     buku: state.buku.map((b) => b._id === action.payload._id ? action.payload : b)
+            // }
+            return {
+                buku: state.buku.map((b) => {
+                    if (b._id === action.payload._id) {
+                        return action.payload
+                    }
+                    return b
+                })
+            }
         default:
             return state
     }

@@ -11,6 +11,7 @@ body {
   margin: 0;
   font-family: "Poppins"
 }
+
 header {
   background: #fff;
 }
@@ -26,6 +27,44 @@ header a {
   color: #333;
   text-decoration: none;
 }
+/* header .searchLabel {
+  color: #333;
+  font-size: 20px;
+  margin-right: -430px;
+  font-weight: 600;
+  margin-top: -5px;
+} */
+
+/* style={{ display: 'flex', alignItems: 'center' }} */
+
+header .search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: -40px;
+}
+
+header .searchInput {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 400px;
+  text-align: center;
+  margin-top: 21px;
+}
+
+header .searchButton {
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px; /* Tambahkan properti margin-left */
+} 
+
+
 .pages {
   max-width: 1400px;
   padding: 20px;
@@ -66,6 +105,49 @@ header a {
   color: #333;
 }
 
+.buku-details .delete {
+  position: absolute;
+  top: 40px;
+  right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
+}
+
+.buku-details .edit {
+  position: absolute;
+  top: 90px;
+  right: 20px; /* Adjust the right value to separate it from the delete button */
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
+}
+
+.popup .update {
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.popup .cancel {
+  margin-left: 20px;
+  background: var(--error);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 /* form buku */
 label, input {
   display: block;
@@ -79,7 +161,7 @@ input{
   border-radius: 4px;
   box-sizing: border-box;
 }
-form button {
+form .simpan {
   background: var(--primary);
   border: 0;
   color: #fff;
