@@ -32,6 +32,7 @@ router.delete('/:id', deleteBuku)
 router.get('/search', searchBuku);
 
     // SEARCH buku by genre
-    router.get('/search/genre', searchBukuByGenre); // Perubahan di sini
+router.get('/search/genre', searchBukuByGenre);
+
 
 module.exports = router

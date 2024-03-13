@@ -102,21 +102,27 @@ const updateBuku = async (req, res) => {
 }
 
 // SEARCH buku
+// SEARCH buku
 async function searchBuku(req, res) {
     const { keyword } = req.query;
   
     // Create a query to search for books based on the keyword
     const query = { $text: { $search: keyword } };
   
-    // Execute the query and retrieve results
-    const results = await BukuModel.find(query);
+    try {
+        // Execute the query and retrieve results
+        const results = await Buku.find(query);
   
-    // Send the search results back to the client
-    res.status(200).json({
-      success: true,
-      data: results,
-    });
-  }
+        // Send the search results back to the client
+        res.status(200).json({
+            success: true,
+            data: results,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 
   // SEARCH buku by genre
   const searchBukuByGenre = async (req, res) => {
