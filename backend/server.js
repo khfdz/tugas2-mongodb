@@ -17,6 +17,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/api/buku', bukuRoutes);
+app.use('/api/search', bukuRoutes);
 app.use('/api/buku/search', bukuRoutes);
 
 // Connect to DB

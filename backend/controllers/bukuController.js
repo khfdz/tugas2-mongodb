@@ -117,9 +117,17 @@ async function searchBuku(req, res) {
       data: results,
     });
   }
-  
-  
 
+  // SEARCH buku by genre
+  const searchBukuByGenre = async (req, res) => {
+    const { genre } = req.query;
+    try {
+        const result = await Buku.find({ genre: genre });
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 module.exports = {
     getBuku,
@@ -127,5 +135,6 @@ module.exports = {
     createNewBuku,
     deleteBuku,
     updateBuku,
-    searchBuku
+    searchBuku,
+    searchBukuByGenre
 };
