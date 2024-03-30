@@ -1,38 +1,33 @@
-const express = require('express')
+const express = require('express');
 
-// const { createNewBuku } = require('../controllers/bukuController')
 const {
-    createNewBuku, 
-    getBuku, 
-    getBukuSatu, 
-    updateBuku,
-    deleteBuku, 
-    searchBuku, 
-    searchBukuByGenre
-} = require('../controllers/bukuController')
+  createNewBuku,
+  getBuku,
+  getBukuSatu,
+  updateBuku,
+  deleteBuku,
+  searchBuku,
+} = require('../controllers/bukuController');
 
-const router = express.Router()
+const router = express.Router();
 
-    // GET all data buku
-router.get('/', getBuku)
+// GET all data buku
+router.get('/', getBuku);
 
-    // Get single buku
-router.get('/:id', getBukuSatu)
+// Get single buku
+router.get('/:id', getBukuSatu);
 
-    // POST new buku
-router.post('/', createNewBuku)
+// POST new buku
+router.post('/', createNewBuku);
 
-    // UPDATE buku
-router.patch('/:id', updateBuku)
+// UPDATE buku
+router.patch('/:id', updateBuku);
 
-    // DELETE buku
-router.delete('/:id', deleteBuku)
+// DELETE buku
+router.delete('/:id', deleteBuku);
 
-    // SEARCH buku
+// Search buku
 router.get('/search', searchBuku);
 
-    // SEARCH buku by genre
-router.get('/search/genre', searchBukuByGenre);
 
-
-module.exports = router
+module.exports = router;

@@ -102,38 +102,97 @@ const updateBuku = async (req, res) => {
 }
 
 // SEARCH buku
-// SEARCH buku
-async function searchBuku(req, res) {
-    const { keyword } = req.query;
-  
-    // Create a query to search for books based on the keyword
-    const query = { $text: { $search: keyword } };
-  
+// async function searchBuku(req, res) {
+//     const { keyword } = req.query;
+//     try {
+//       const query = {
+//         $or: [
+//           { judul: { $regex: keyword, $options: "i" } },
+//           { penulis: { $regex: keyword, $options: "i" } },
+//           { penerbit: { $regex: keyword, $options: "i" } },
+//           { genre: { $regex: keyword, $options: "i" } },
+//         ],
+//       };
+//       const results = await Buku.find(query);
+//       res.status(200).json({ success: true, data: results });
+//     } catch (error) {
+//       res.status(500).json({ message: error.message });
+//     }
+//   }
+
+// const searchBuku = async (req, res) => {
+//   try {
+//     const query = req.query.q; // Ambil query pencarian dari URL
+
+//     // Lakukan pencarian menggunakan $text operator
+//     const result = await Buku.find({ $text: { $search: query } });
+
+//     res.status(200).json(result);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
+const searchBuku = async (req, res) => {
     try {
-        // Execute the query and retrieve results
-        const results = await Buku.find(query);
-  
-        // Send the search results back to the client
-        res.status(200).json({
-            success: true,
-            data: results,
+        const page = parseInt(req.query.page) - 1 || 0;
+        const limit = parseInt(req.query.limit) || 5;
+        const search = req.query.q || "";
+        let sort = req.query.sort || "updatedAt";
+        let genre = req.query.genre || "All";
+
+        const genreOptions = [
+            "Novel",
+            "Sains",
+            "Self Improvement"
+        ];
+
+        genre === "All"
+        ? (genre = [...genreOptions])
+        : (genre = req.query.genre.split(","));
+
+        let sortBy = {};
+        if (sort[1]) {
+            sortBy[sort[0]] = sort[1];
+        } else {
+            sortBy[sort[0]] = "asc";
+        }
+
+        const buku = await Buku.find({ $text: { $search: search }})
+        .where("genre")
+        .in([...genre])
+        .sort(sortBy)
+        .skip(page * limit)
+        .limit(limit);
+
+        const total = await Buku.countDocuments({
+            genre: { $in: [...genre] },
+            $text: { $search: search }
         });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+
+        if (buku.length === 0) {
+            return res.status(404).json({ error: "Buku tidak ditemukan" });
+        }
+
+        const response = {
+            error: false,
+            total,
+            page: page + 1,
+            limit,
+            genres: genreOptions,
+            buku,
+        };
+
+        res.status(200).json(response);
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: true, message: "Internal Server Error" });
     }
-}
+};
 
 
-  // SEARCH buku by genre
-  const searchBukuByGenre = async (req, res) => {
-    const { genre } = req.query;
-    try {
-        const result = await Buku.find({ genre: genre });
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-}
+module.exports = { createNewBuku, getBuku, getBukuSatu, updateBuku, deleteBuku, searchBuku };
 
 module.exports = {
     getBuku,
@@ -141,6 +200,5 @@ module.exports = {
     createNewBuku,
     deleteBuku,
     updateBuku,
-    searchBuku,
-    searchBukuByGenre
+    searchBuku
 };

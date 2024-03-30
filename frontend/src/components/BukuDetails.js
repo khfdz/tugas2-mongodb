@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useBukuContext } from "../hooks/useBukuContext"
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
@@ -6,11 +6,23 @@ const BukuDetails = ({ buku }) => {
     const { dispatch } = useBukuContext()
     const [showEditPopup, setShowEditPopup] = useState(false)
     const [editedData, setEditData] = useState({
+        id: buku._id,
         judul: buku.judul,
         penulis: buku.penulis,
         penerbit: buku.penerbit,
         genre: buku.genre
     })
+
+    useEffect(() => {
+        setEditData(prevData => ({
+            ...prevData,
+            id: buku._id,
+            judul: buku.judul,
+            penulis: buku.penulis,
+            penerbit: buku.penerbit,
+            genre: buku.genre
+        }))
+    }, [buku])
 
     const handleClick = async () => {
         const response = await fetch(`/api/buku/${buku._id}`, {
@@ -37,19 +49,19 @@ const BukuDetails = ({ buku }) => {
                 'Content-Type': 'application/json'
             }
         })
-        const json = await response.json()
-        
+        // const json = await response.json() // json tidak digunakan
+
         if (response.ok) {
-            dispatch({type: 'UPDATE_BUKU', payload: json})
+            dispatch({type: 'UPDATE_BUKU', payload: editedData})
         }
     }
 
     return (
         <div className="buku-details">
-            <h4>{buku.judul}</h4>
-            <p>Penulis: {buku.penulis}</p>
-            <p>Penerbit: {buku.penerbit}</p>
-            <p>Genre: {buku.genre}</p>
+            <h4>{editedData.judul}</h4>
+            <p><strong>Penulis:</strong> {editedData.penulis}</p>
+            <p><strong>Penerbit:</strong> {editedData.penerbit}</p>
+            <p><strong>Genre:</strong> {editedData.genre}</p>
             <p>{formatDistanceToNow(new Date(buku.createdAt), { addSuffix: true })}</p>
             <span className="material-symbols-outlined delete" onClick={handleClick}>delete</span>
             <span className="material-symbols-outlined edit" onClick={handleEdit}>edit</span>

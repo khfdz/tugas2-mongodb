@@ -24,4 +24,7 @@ const bukuSchema = new Schema({
     timestamps: true
 })
 
+bukuSchema.index({ judul: "text", penulis: "text", penerbit: "text", genre: "text" });
+
+
 module.exports = mongoose.model("Buku", bukuSchema)
