@@ -3,12 +3,15 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bukuRoutes = require('./routes/bukuRoutes');
+const cors = require('cors');
+
 
 // express app
 const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(cors());
 
 // Middleware Logging
 app.use((req, res, next) => {
