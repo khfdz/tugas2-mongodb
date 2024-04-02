@@ -49,19 +49,25 @@ const BukuDetails = ({ buku }) => {
                 'Content-Type': 'application/json'
             }
         })
-        // const json = await response.json() // json tidak digunakan
 
         if (response.ok) {
-            dispatch({type: 'UPDATE_BUKU', payload: editedData})
+            const updatedBuku = {
+                ...buku,
+                judul: editedData.judul,
+                penulis: editedData.penulis,
+                penerbit: editedData.penerbit,
+                genre: editedData.genre
+            };
+            dispatch({ type: 'UPDATE_BUKU', payload: updatedBuku });
         }
     }
 
     return (
         <div className="buku-details">
-            <h4>{editedData.judul}</h4>
-            <p><strong>Penulis:</strong> {editedData.penulis}</p>
-            <p><strong>Penerbit:</strong> {editedData.penerbit}</p>
-            <p><strong>Genre:</strong> {editedData.genre}</p>
+            <h4>{buku.judul}</h4>
+            <p><strong>Penulis:</strong> {buku.penulis}</p>
+            <p><strong>Penerbit:</strong> {buku.penerbit}</p>
+            <p><strong>Genre:</strong> {buku.genre}</p>
             <p>{formatDistanceToNow(new Date(buku.createdAt), { addSuffix: true })}</p>
             <span className="material-symbols-outlined delete" onClick={handleClick}>delete</span>
             <span className="material-symbols-outlined edit" onClick={handleEdit}>edit</span>

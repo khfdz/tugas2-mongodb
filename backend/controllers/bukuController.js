@@ -4,17 +4,35 @@ const mongoose = require('mongoose')
 
 // Get all buku
 const getBuku = async (req, res) => {
-    // const buku = await Buku.find({})
-    // res.status(200).json(buku)
-
     try {
-        const buku = await Buku.find({})
-        res.status(200).json(buku)
-    } catch (error) {
-        res.status(400).json({error: error.message})
-    }
+        const search = req.query.q || "";
+        const page = parseInt(req.query.page) || 1;
+        const limit = 5;
+        const skip = (page - 1) * limit;
 
-}
+        const bukuCount = await Buku.countDocuments({
+            $or: [ 
+                { judul: { $regex: search, $options: "i" } }, 
+                { penulis: { $regex: search, $options: "i" } },
+                { genre: { $regex: search, $options: "i" } }
+            ]
+        });
+
+        const buku = await Buku.find({
+            $or: [ 
+                { judul: { $regex: search, $options: "i" } }, 
+                { penulis: { $regex: search, $options: "i" } },
+                { genre: { $regex: search, $options: "i" } }
+            ]
+        }).skip(skip).limit(limit); 
+
+        const totalPages = Math.ceil(bukuCount / limit);
+
+        res.status(200).json({ buku, totalPages });
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+};
 
 // Get single buku
 const getBukuSatu = async (req, res) => {

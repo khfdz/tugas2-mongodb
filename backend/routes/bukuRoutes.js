@@ -5,8 +5,9 @@ const {
   getBuku,
   getBukuSatu,
   updateBuku,
-  deleteBuku,
-  searchBuku,
+  deleteBuku
+  // searchBuku,
+  
 } = require('../controllers/bukuController');
 
 const router = express.Router();
@@ -27,7 +28,7 @@ router.patch('/:id', updateBuku);
 router.delete('/:id', deleteBuku);
 
 // Search buku
-router.get('/search', searchBuku);
+// router.post('/search', searchBuku);
 
 
 module.exports = router;
