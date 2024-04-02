@@ -3,18 +3,9 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bukuRoutes = require('./routes/bukuRoutes');
-const cors = require('cors');
 
 // express app
 const app = express();
-
-app.use(cors(
-  {
-    origin: ["https://tugas2-mongodb.vercel.app/"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
-  }
-))
 
 // Middleware
 app.use(express.json());
